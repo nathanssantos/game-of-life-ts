@@ -1,19 +1,16 @@
 import Matrix from "./components/Matrix";
 import "./style.css";
 
-type Elements = {
-  matrix: Matrix | null;
-};
-
 class App {
   element = document.querySelector<HTMLDivElement>("#app")!;
   state: number[][] = [];
-  elements: Elements = { matrix: null };
+  matrix: Matrix | null = null;
   cols = 40;
   rows = 40;
 
   createMatrix = (cols: number, rows: number): number[][] => {
     const matrix = new Array(cols);
+
     for (let i = 0; i < matrix.length; i++) {
       matrix[i] = new Array(rows);
     }
@@ -52,14 +49,13 @@ class App {
 
   loop = (): void => {
     requestAnimationFrame(() => {
-      if (!this.elements.matrix) return;
+      if (!this.matrix) return;
 
       const nextState: number[][] = this.createMatrix(this.cols, this.rows);
 
       for (let i = 0; i < this.state.length; i++) {
         for (let j = 0; j < this.state[i].length; j++) {
           const currentCellValue = this.state[i][j];
-
           const currentCellNeighborsCellsSum = this.countNeighborCells(
             this.state,
             i,
@@ -80,8 +76,7 @@ class App {
         }
       }
 
-      this.elements.matrix.update(nextState);
-
+      this.matrix.update(nextState);
       this.state = nextState;
 
       this.loop();
@@ -91,7 +86,7 @@ class App {
   init = (): void => {
     this.state = this.createRandomMatrix(this.cols, this.rows);
     const newMatrix = new Matrix({ data: this.state });
-    this.elements.matrix = newMatrix;
+    this.matrix = newMatrix;
     newMatrix.render(this.element);
 
     this.loop();

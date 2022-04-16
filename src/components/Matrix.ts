@@ -6,14 +6,10 @@ type MatrixProps = {
 
 class Matrix extends Component {
   data: number[][] = [[]];
-  elements: Component[][] = [[]];
 
   constructor(props: MatrixProps) {
     super({ ...props, className: "matrix" });
-
-    const { data } = props;
-
-    this.data = data;
+    this.data = props.data;
   }
 
   render = (parent: HTMLElement): void => {
@@ -23,9 +19,7 @@ class Matrix extends Component {
       for (let j = 0; j < this.data[i].length; j++) {
         const newCell = new Component({ className: `cell cell__${i}_${j}` });
         const newCellValue = this.data[i][j];
-        // newCell.body.innerHTML = String(newCellValue);
         if (newCellValue) newCell.setStyle("background-color", "#fff");
-
         newMatrix.body.append(newCell.body);
       }
     }
@@ -37,7 +31,7 @@ class Matrix extends Component {
     for (let i = 0; i < state.length; i++) {
       for (let j = 0; j < state[i].length; j++) {
         const currentCellValue = state[i][j];
-        const currentCellElement = document.querySelector<HTMLElement>(
+        const currentCellElement = document.querySelector<HTMLDivElement>(
           `.cell__${i}_${j}`
         )!;
 
