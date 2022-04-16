@@ -31,7 +31,7 @@ class Matrix extends Component {
     for (let i = 0; i < state.length; i++) {
       for (let j = 0; j < state[i].length; j++) {
         const currentCellValue = state[i][j];
-        const currentCellElement = document.querySelector<HTMLDivElement>(
+        const currentCellElement = document.querySelector<HTMLElement>(
           `.cell__${i}_${j}`
         )!;
 

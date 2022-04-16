@@ -2,7 +2,6 @@ import Matrix from "./components/Matrix";
 import "./style.css";
 
 class App {
-  element = document.querySelector<HTMLDivElement>("#app")!;
   state: number[][] = [];
   matrix: Matrix | null = null;
   cols = 40;
@@ -48,7 +47,7 @@ class App {
   };
 
   loop = (): void => {
-    requestAnimationFrame(() => {
+    requestAnimationFrame((): void => {
       if (!this.matrix) return;
 
       const nextState: number[][] = this.createMatrix(this.cols, this.rows);
@@ -87,7 +86,7 @@ class App {
     this.state = this.createRandomMatrix(this.cols, this.rows);
     const newMatrix = new Matrix({ data: this.state });
     this.matrix = newMatrix;
-    newMatrix.render(this.element);
+    newMatrix.render(document.querySelector<HTMLElement>("#app")!);
 
     this.loop();
   };

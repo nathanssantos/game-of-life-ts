@@ -1,4 +1,4 @@
-type ComponentProps = {
+export type ComponentProps = {
   type?: string;
   className: string;
 };
@@ -21,11 +21,11 @@ class Component {
     }
   }
 
-  setStyle = (prop: string, value: string) => {
+  setStyle = (prop: string, value: string): void => {
     this.body.style[prop] = value;
   };
 
-  destroy = () => {
+  destroy = (): void => {
     if (this.body.parentNode) this.body.parentNode.removeChild(this.body);
   };
 }
