@@ -39,13 +39,11 @@ class Matrix extends Component {
         const currentCellValue = state[i][j];
         const currentCellElement = document.querySelector<HTMLElement>(
           `.cell__${i}_${j}`
-        );
+        )!;
 
-        if (currentCellElement) {
-          currentCellElement.style.backgroundColor = currentCellValue
-            ? "#000"
-            : "#fff";
-        }
+        currentCellElement.style.backgroundColor = currentCellValue
+          ? "#000"
+          : "#fff";
       }
     }
   };

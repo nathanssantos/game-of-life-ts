@@ -38,7 +38,10 @@ class App {
 
     for (let i = -1; i < 2; i++) {
       for (let j = -1; j < 2; j++) {
-        sum += matrix[x + i][y + j];
+        const col = (x + i + this.cols) % this.cols;
+        const row = (y + j + this.rows) % this.rows;
+
+        sum += matrix[col][row];
       }
     }
 
@@ -48,7 +51,7 @@ class App {
   };
 
   loop = (): void => {
-    setInterval(() => {
+    requestAnimationFrame(() => {
       if (!this.elements.matrix) return;
 
       const nextState: number[][] = this.createMatrix(this.cols, this.rows);
@@ -57,31 +60,22 @@ class App {
         for (let j = 0; j < this.state[i].length; j++) {
           const currentCellValue = this.state[i][j];
 
-          if (
-            i === 0 ||
-            i === this.cols - 1 ||
-            j === 0 ||
-            j === this.rows - 1
-          ) {
-            nextState[i][j] = currentCellValue;
-          } else {
-            const currentCellNeighborsCellsSum = this.countNeighborCells(
-              this.state,
-              i,
-              j
-            );
+          const currentCellNeighborsCellsSum = this.countNeighborCells(
+            this.state,
+            i,
+            j
+          );
 
-            if (currentCellValue === 0 && currentCellNeighborsCellsSum === 3) {
-              nextState[i][j] = 1;
-            } else if (
-              currentCellValue === 1 &&
-              (currentCellNeighborsCellsSum < 2 ||
-                currentCellNeighborsCellsSum > 3)
-            ) {
-              nextState[i][j] = 0;
-            } else {
-              nextState[i][j] = currentCellValue;
-            }
+          if (currentCellValue === 0 && currentCellNeighborsCellsSum === 3) {
+            nextState[i][j] = 1;
+          } else if (
+            currentCellValue === 1 &&
+            (currentCellNeighborsCellsSum < 2 ||
+              currentCellNeighborsCellsSum > 3)
+          ) {
+            nextState[i][j] = 0;
+          } else {
+            nextState[i][j] = currentCellValue;
           }
         }
       }
@@ -89,7 +83,9 @@ class App {
       this.elements.matrix.update(nextState);
 
       this.state = nextState;
-    }, 50);
+
+      this.loop();
+    });
   };
 
   init = (): void => {
