@@ -1,14 +1,14 @@
-interface ElementProps {
+type ComponentProps = {
   type?: string;
   className: string;
-}
+};
 
-class Element {
+class Component {
   type = "div";
   className = "";
   body = document.createElement(this.type);
 
-  constructor(props: ElementProps) {
+  constructor(props: ComponentProps) {
     const { type, className } = props;
 
     this.type = type || "div";
@@ -30,4 +30,4 @@ class Element {
   };
 }
 
-export default Element;
+export default Component;

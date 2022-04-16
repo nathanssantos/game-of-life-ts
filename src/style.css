@@ -20,16 +20,16 @@ body {
 
 .matrix {
   display: grid;
-  grid-template-columns: repeat(20, 2.5rem);
+  grid-template-columns: repeat(40, 1rem);
   background-color: #fff;
   gap: 1px;
 }
 
 .cell {
-  height: 2.5rem;
+  height: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #000;
-  border-radius: 50%;
+  /* border-radius: 50%; */
 }
